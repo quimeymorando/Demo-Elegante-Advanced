@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Luce Mare | Mediterranean Fine Dining</title>
+    <meta name="description" content="Explore our gallery of fine dining experiences, exquisite dishes, and the luxurious atmosphere of Luce Mare restaurant in Barcelona.">
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:title" content="Gallery | Luce Mare">
+    <meta property="og:description" content="Mediterranean Fine Dining — Visual Experience">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ---- Gallery Hero ---- */
+        .gallery-hero {
+            height: 55vh;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .gallery-hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .gallery-hero-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.45;
+        }
+        .gallery-hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(10,10,10,0.6), rgba(10,10,10,0.4), var(--black));
+        }
+        .gallery-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ---- Gallery Filter Tabs ---- */
+        .gallery-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 48px;
+        }
+        .gallery-filter-btn {
+            padding: 8px 24px;
+            border: 1px solid var(--white-20);
+            color: var(--white-60);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            transition: all var(--trans-fast);
+            background: transparent;
+        }
+        .gallery-filter-btn:hover,
+        .gallery-filter-btn.active {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* ---- Gallery Container ---- */
+        .gallery-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 24px 80px;
+        }
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        /* ---- Masonry Grid ---- */
+        .gallery-masonry {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px;
+        }
+        @media (min-width: 768px) {
+            .gallery-masonry {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+        }
+        @media (min-width: 1200px) {
+            .gallery-masonry {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background: #111;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.9s ease;
+            filter: grayscale(100%);
+            aspect-ratio: 1/1;
+        }
+        /* Wide items */
+        @media (min-width: 768px) {
+            .gallery-item.wide {
+                grid-column: span 2;
+            }
+            .gallery-item.wide img {
+                aspect-ratio: 2/1;
+            }
+            .gallery-item.tall {
+                grid-row: span 2;
+            }
+            .gallery-item.tall img {
+                aspect-ratio: 1/2;
+            }
+        }
+        .gallery-item:hover img {
+            transform: scale(1.07);
+            filter: grayscale(0%);
+        }
+        .gallery-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10,10,10,0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity var(--trans-normal);
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        .gallery-overlay-icon {
+            width: 40px; height: 40px;
+            border: 1px solid var(--white-60);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .gallery-overlay-icon svg {
+            width: 16px; height: 16px;
+            color: var(--white);
+        }
+        .gallery-overlay span {
+            color: var(--white);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+        .gallery-overlay .overlay-cat {
+            color: var(--gold);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* ---- Gold divider ---- */
+        .gold-divider {
+            width: 60px;
+            height: 1px;
+            background-color: var(--gold);
+            margin: 0 auto 32px auto;
+        }
+
+        /* ---- Section tag ---- */
+        .section-tag {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 12px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        /* ---- Gallery CTA ---- */
+        .gallery-page-cta {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 64px;
+            border-top: 1px solid var(--white-05);
+        }
+        .gallery-page-cta h3 {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        .gallery-page-cta p {
+            color: var(--white-50);
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+        .gallery-page-cta-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ---- Lightbox enhanced ---- */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(10,10,10,0.97);
+            z-index: 999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            position: relative;
+        }
+        .lightbox-content img {
+            max-height: 85vh;
+            max-width: 90vw;
+            width: auto;
+            height: auto;
+            display: block;
+        }
+        .lightbox-close {
+            position: fixed;
+            top: 24px; right: 32px;
+            color: var(--white-60);
+            font-size: 36px;
+            cursor: pointer;
+            transition: color var(--trans-fast);
+            line-height: 1;
+        }
+        .lightbox-close:hover { color: var(--gold); }
+        .lightbox-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(250,250,250,0.05);
+            border: 1px solid var(--white-10);
+            color: var(--white-60);
+            width: 48px; height: 48px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: all var(--trans-fast);
+            font-size: 24px;
+        }
+        .lightbox-nav:hover { border-color: var(--gold); color: var(--gold); }
+        .lightbox-prev { left: 16px; }
+        .lightbox-next { right: 16px; }
+        @media (min-width: 768px) {
+            .lightbox-prev { left: 32px; }
+            .lightbox-next { right: 32px; }
+        }
+        .lightbox-counter {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--white-40);
+            font-size: 12px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="font-heading tracking-widest uppercase" style="font-size: 20px; letter-spacing: 0.12em;">Luce Mare</a>
+
+        <div class="nav-links">
+            <a href="index.html#about">Story</a>
+            <a href="menu.html">Menu</a>
+            <a href="gallery.html" class="active">Gallery</a>
+            <a href="index.html#reservation">Reservations</a>
+        </div>
+
+        <a href="index.html#reservation" class="btn-nav" style="display: none;" id="nav-reserve-btn">Reserve</a>
+
+        <div class="mobile-menu-btn" id="mobileBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html#about">Story</a>
+        <a href="menu.html">Menu</a>
+        <a href="gallery.html" class="active">Gallery</a>
+        <a href="index.html#reservation">Reservations</a>
+    </div>
+
+    <!-- Gallery Hero -->
+    <header class="gallery-hero">
+        <div class="gallery-hero-bg">
+            <img src="public/gallery2.png" alt="Luce Mare Gallery">
+        </div>
+        <div class="gallery-hero-overlay"></div>
+        <div class="gallery-hero-content">
+            <span class="section-tag fade-up delay-100">Visual Journey</span>
+            <div class="gold-divider fade-up delay-100"></div>
+            <h1 class="font-heading fade-up delay-200" style="font-size: 64px; line-height: 1; margin-bottom: 16px;">Our Gallery</h1>
+            <p class="fade-up delay-300" style="color: var(--white-60); font-size: 14px; letter-spacing: 0.15em; text-transform: uppercase;">Food · Interior · Atmosphere</p>
+        </div>
+    </header>
+
+    <!-- Gallery Content -->
+    <main class="gallery-container">
+
+        <div class="gallery-header fade-up delay-100">
+            <!-- Filter buttons -->
+            <div class="gallery-filters">
+                <button class="gallery-filter-btn active" data-filter="all">All</button>
+                <button class="gallery-filter-btn" data-filter="food">Cuisine</button>
+                <button class="gallery-filter-btn" data-filter="interior">Interior</button>
+                <button class="gallery-filter-btn" data-filter="bar">Bar &amp; Terrace</button>
+            </div>
+        </div>
+
+        <!-- Masonry Gallery -->
+        <div class="gallery-masonry" id="galleryGrid">
+
+            <!-- Row 1 -->
+            <a href="#" class="gallery-item wide fade-up delay-100" data-category="interior" data-index="0">
+                <img src="public/gallery1.png" alt="Restaurant Interior — Luce Mare dining room">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Interior</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item tall fade-up delay-200" data-category="food" data-index="1">
+                <img src="public/about_dish.png" alt="Chef signature dish — Luce Mare">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Cuisine</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item fade-up delay-100" data-category="food" data-index="2">
+                <img src="public/truffle.png" alt="Truffle Tagliolini">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Cuisine</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item fade-up delay-200" data-category="food" data-index="3">
+                <img src="public/wagyu.png" alt="Wagyu A5 Tenderloin">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Cuisine</span>
+                </div>
+            </a>
+
+            <!-- Row 2 -->
+            <a href="#" class="gallery-item wide fade-up delay-100" data-category="bar" data-index="4">
+                <img src="public/gallery2.png" alt="Cocktail Bar — Luce Mare">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Bar</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item fade-up delay-200" data-category="food" data-index="5">
+                <img src="public/lobster.png" alt="Lobster Ravioli">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Cuisine</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item fade-up delay-300" data-category="food" data-index="6">
+                <img src="public/scallops.png" alt="Golden Scallops">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Cuisine</span>
+                </div>
+            </a>
+
+            <!-- Row 3 -->
+            <a href="#" class="gallery-item tall fade-up delay-100" data-category="bar" data-index="7">
+                <img src="public/gallery3.png" alt="Wine cellar — Luce Mare">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Cellar</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item wide fade-up delay-200" data-category="interior" data-index="8">
+                <img src="public/gallery4.png" alt="Chef cooking — Luce Mare kitchen">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Kitchen</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item fade-up delay-100" data-category="interior" data-index="9">
+                <img src="public/salon1.png" alt="Dining salon — Luce Mare">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Interior</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item fade-up delay-200" data-category="bar" data-index="10">
+                <img src="public/bar1.png" alt="Bar atmosphere — Luce Mare">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Bar</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item fade-up delay-300" data-category="bar" data-index="11">
+                <img src="public/bar2.png" alt="Terrace cocktails — Luce Mare">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Terrace</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item fade-up delay-400" data-category="interior" data-index="12">
+                <img src="public/salon2.png" alt="Private salon — Luce Mare">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Private Dining</span>
+                </div>
+            </a>
+
+            <a href="#" class="gallery-item fade-up delay-100" data-category="food" data-index="13">
+                <img src="public/tagliolini.png" alt="Tagliolini dish — Luce Mare">
+                <div class="gallery-overlay">
+                    <div class="gallery-overlay-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                    </div>
+                    <span>View</span>
+                    <span class="overlay-cat">Cuisine</span>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="gallery-page-cta fade-up delay-100">
+            <p class="section-tag" style="justify-content: center; display: block; text-align: center;">Reserve Your Experience</p>
+            <h3 class="font-heading" style="color: var(--white);">Ready to Dine With Us?</h3>
+            <p>Join us for an unforgettable Mediterranean fine dining journey.</p>
+            <div class="gallery-page-cta-btns">
+                <a href="index.html#reservation" class="btn-gold">Reserve a Table</a>
+                <a href="menu.html" class="btn-outline">View Menu</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">&#8249;</button>
+        <div class="lightbox-content">
+            <img src="" alt="Gallery Full Size" id="lightboxImg">
+        </div>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">&#8250;</button>
+        <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div style="flex: 1;">
+            <p>&copy; 2026 Luce Mare. All rights reserved.</p>
+            <p style="margin-top: 8px; font-size: 12px;">Passeig de Gràcia 92, Barcelona, Spain</p>
+        </div>
+        <div class="footer-logo">LUCE MARE</div>
+        <div class="footer-social" style="flex: 1; justify-content: flex-end;">
+            <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                Instagram
+            </a>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/15551234567?text=Hello!%20I'd%20like%20to%20reserve%20a%20table%20at%20Luce%20Mare." target="_blank" class="fab-whatsapp" aria-label="Reserve via WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    </a>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script>
+        // ---- Gallery Filter ----
+        const filterBtns = document.querySelectorAll('.gallery-filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-masonry .gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+
+                galleryItems.forEach(item => {
+                    const cat = item.dataset.category;
+                    if (filter === 'all' || cat === filter) {
+                        item.style.display = '';
+                        item.style.opacity = '1';
+                    } else {
+                        item.style.opacity = '0';
+                        setTimeout(() => { item.style.display = 'none'; }, 300);
+                    }
+                });
+            });
+        });
+
+        // ---- Enhanced Lightbox ----
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxPrev = document.getElementById('lightboxPrev');
+        const lightboxNext = document.getElementById('lightboxNext');
+        const lightboxCounter = document.getElementById('lightboxCounter');
+
+        let currentIndex = 0;
+        let visibleItems = [];
+
+        function getVisibleItems() {
+            return Array.from(galleryItems).filter(item => item.style.display !== 'none');
+        }
+
+        function openLightbox(index) {
+            visibleItems = getVisibleItems();
+            currentIndex = index;
+            const imgSrc = visibleItems[currentIndex].querySelector('img').src;
+            lightboxImg.src = imgSrc;
+            lightboxImg.alt = visibleItems[currentIndex].querySelector('img').alt;
+            updateCounter();
+
+            lightbox.style.display = 'flex';
+            setTimeout(() => lightbox.classList.add('active'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+                lightboxImg.src = '';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        function showNext() {
+            visibleItems = getVisibleItems();
+            currentIndex = (currentIndex + 1) % visibleItems.length;
+            lightboxImg.style.opacity = '0';
+            setTimeout(() => {
+                lightboxImg.src = visibleItems[currentIndex].querySelector('img').src;
+                lightboxImg.style.opacity = '1';
+                updateCounter();
+            }, 200);
+        }
+
+        function showPrev() {
+            visibleItems = getVisibleItems();
+            currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+            lightboxImg.style.opacity = '0';
+            setTimeout(() => {
+                lightboxImg.src = visibleItems[currentIndex].querySelector('img').src;
+                lightboxImg.style.opacity = '1';
+                updateCounter();
+            }, 200);
+        }
+
+        function updateCounter() {
+            lightboxCounter.textContent = `${currentIndex + 1} / ${visibleItems.length}`;
+        }
+
+        lightboxImg.style.transition = 'opacity 0.2s ease';
+
+        galleryItems.forEach((item, i) => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                // find index among visible items
+                visibleItems = getVisibleItems();
+                const idx = visibleItems.indexOf(item);
+                if (idx !== -1) openLightbox(idx);
+            });
+        });
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxNext.addEventListener('click', showNext);
+        lightboxPrev.addEventListener('click', showPrev);
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') showNext();
+            if (e.key === 'ArrowLeft') showPrev();
+        });
+
+        // Show reserve button on scroll
+        const navReserveBtn = document.getElementById('nav-reserve-btn');
+        window.addEventListener('scroll', () => {
+            navReserveBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+        });
+    </script>
+</body>
+</html>

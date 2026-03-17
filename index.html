@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luce Mare | Mediterranean Fine Dining Experience</title>
+    <meta name="description" content="Luce Mare is an elegant Mediterranean fine dining restaurant. Discover our signature dishes and make a reservation for an unforgettable culinary experience.">
+
+    <!-- Open Graph / SEO -->
+    <meta property="og:title" content="Luce Mare | Fine Dining">
+    <meta property="og:description" content="Mediterranean Fine Dining Experience">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ---- Hero subtitle ---- */
+        .hero-subtitle {
+            color: var(--white-70);
+            font-size: 16px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        /* ---- About section ---- */
+        .about-tag {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 12px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        .about-text h2 {
+            font-size: 36px;
+            margin-bottom: 24px;
+        }
+        @media (min-width: 768px) {
+            .about-text h2 { font-size: 48px; }
+        }
+
+        /* ---- Featured Dishes heading ---- */
+        .section-tag {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 12px;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        /* ---- Menu Preview ---- */
+        .menu-preview-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 768px) {
+            .menu-preview-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+            }
+        }
+        .menu-preview-card {
+            background: rgba(250,250,250,0.03);
+            border: 1px solid var(--white-10);
+            padding: 32px;
+            transition: border-color var(--trans-normal), background var(--trans-normal);
+        }
+        .menu-preview-card:hover {
+            border-color: var(--gold);
+            background: rgba(212,175,55,0.04);
+        }
+        .menu-preview-card h3 {
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 13px;
+            margin-bottom: 24px;
+            font-family: var(--font-sans);
+        }
+        .menu-preview-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--white-05);
+        }
+        .menu-preview-item:last-of-type { border-bottom: none; }
+        .menu-preview-item span:first-child {
+            font-family: var(--font-heading);
+            font-size: 16px;
+        }
+        .menu-preview-item span:last-child {
+            color: var(--gold);
+            font-size: 14px;
+        }
+
+        /* ---- Gallery preview link ---- */
+        .gallery-cta {
+            display: block;
+            text-align: center;
+            margin-top: 48px;
+        }
+        .gallery-cta a {
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 4px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 14px;
+            transition: color var(--trans-fast);
+        }
+        .gallery-cta a:hover { color: var(--white); }
+
+        /* ---- Instagram section ---- */
+        .insta-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10,10,10,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity var(--trans-fast);
+        }
+        .insta-item:hover .insta-overlay { opacity: 1; }
+        .insta-overlay svg { width: 28px; height: 28px; color: var(--white); }
+
+        /* ---- Location map ---- */
+        .map-embed { height: 320px; }
+
+        /* ---- Scroll indicator ---- */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--white-40);
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 1; transform: translateX(-50%) translateY(6px); }
+        }
+        .scroll-indicator::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gold), transparent);
+        }
+
+        /* ---- Divider ---- */
+        .gold-divider {
+            width: 60px;
+            height: 1px;
+            background-color: var(--gold);
+            margin: 0 auto 32px auto;
+        }
+        .gold-divider-left {
+            width: 60px;
+            height: 1px;
+            background-color: var(--gold);
+            margin-bottom: 32px;
+        }
+
+        /* ---- Featured dish 4-grid ---- */
+        @media (min-width: 1024px) {
+            .featured-grid { grid-template-columns: 1fr 1fr 1fr 1fr; }
+        }
+        .dish-card .dish-tag {
+            color: var(--white-40);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* ---- Reservation form styles ---- */
+        .res-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 32px;
+        }
+        .res-form input, .res-form select {
+            background: rgba(250,250,250,0.05);
+            border: 1px solid var(--white-10);
+            color: var(--white);
+            padding: 14px 16px;
+            font-family: var(--font-sans);
+            font-size: 14px;
+            outline: none;
+            width: 100%;
+            transition: border-color var(--trans-fast);
+        }
+        .res-form input::placeholder { color: var(--white-30); }
+        .res-form input:focus, .res-form select:focus { border-color: var(--gold); }
+        .res-form select { cursor: pointer; }
+        .res-form select option { background: #0A0A0A; }
+        .res-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- NAVBAR -->
+    <!-- ============================================================ -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="font-heading tracking-widest uppercase" style="font-size: 20px; letter-spacing: 0.12em;">Luce Mare</a>
+
+        <div class="nav-links">
+            <a href="#about">Story</a>
+            <a href="menu.html">Menu</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="#reservation">Reservations</a>
+        </div>
+
+        <a href="#reservation" class="btn-nav" style="display: none;" id="nav-reserve-btn">Reserve</a>
+
+        <div class="mobile-menu-btn" id="mobileBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#about">Story</a>
+        <a href="menu.html">Menu</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#reservation">Reservations</a>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- HERO -->
+    <!-- ============================================================ -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=1920&q=80" alt="Elegant cocktail glass in dark setting — Mediterranean fine dining" loading="eager">
+        </div>
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <p class="hero-brand fade-up delay-100">Est. 2018 · Barcelona</p>
+            <h1 class="hero-title font-heading fade-up delay-200">Luce Mare</h1>
+            <p class="hero-subtitle fade-up delay-300">Mediterranean Fine Dining Experience</p>
+            <div class="hero-btns fade-up delay-400">
+                <a href="#reservation" class="btn-gold">Reserve a Table</a>
+                <a href="menu.html" class="btn-outline">View Menu</a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">Scroll</div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- ABOUT -->
+    <!-- ============================================================ -->
+    <section class="section-padding" id="about">
+        <div class="container">
+            <div class="grid-2">
+                <!-- Image -->
+                <div class="about-img-wrap fade-up delay-100">
+                    <img src="public/about_dish.png" alt="Chef Marco Bellini at Luce Mare">
+                </div>
+                <!-- Text -->
+                <div class="about-text fade-up delay-200">
+                    <span class="about-tag">Our Story</span>
+                    <div class="gold-divider-left"></div>
+                    <h2 class="font-heading">A Vision Born From the Sea</h2>
+                    <p>Luce Mare was born from a deep love for the Mediterranean — its colors, its light, and above all, its cuisine. Executive Chef Marco Bellini spent over a decade refining his craft across Michelin-starred kitchens in Barcelona, Monaco, and Amalfi before founding this restaurant.</p>
+                    <p>Every dish is a dialogue between tradition and modernity — seasonal ingredients sourced from sustainable producers, prepared with obsessive technique and presented with understated elegance.</p>
+                    <a href="menu.html" class="about-link">
+                        Explore the Menu
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- FEATURED DISHES -->
+    <!-- ============================================================ -->
+    <section class="section-padding" style="background-color: #09090b;" id="dishes">
+        <div class="container">
+            <div class="text-center fade-up delay-100" style="margin-bottom: 64px;">
+                <span class="section-tag">Signature Creations</span>
+                <div class="gold-divider"></div>
+                <h2 class="section-title font-heading" style="margin-bottom: 0;">Featured Dishes</h2>
+            </div>
+
+            <div class="featured-grid">
+                <div class="dish-card fade-up delay-100">
+                    <div class="dish-img-wrap">
+                        <img src="public/truffle.png" alt="Truffle Tagliolini">
+                    </div>
+                    <h3>Truffle Tagliolini</h3>
+                    <span class="dish-tag">Main Course</span>
+                    <p>Hand-rolled pasta, black winter truffle, 36-month parmesan foam</p>
+                </div>
+
+                <div class="dish-card fade-up delay-200">
+                    <div class="dish-img-wrap">
+                        <img src="public/wagyu.png" alt="Wagyu A5 Tenderloin">
+                    </div>
+                    <h3>Wagyu A5 Tenderloin</h3>
+                    <span class="dish-tag">Main Course</span>
+                    <p>Japanese A5 wagyu, bone marrow emulsion, caramelised shallots</p>
+                </div>
+
+                <div class="dish-card fade-up delay-300">
+                    <div class="dish-img-wrap">
+                        <img src="public/lobster.png" alt="Lobster Ravioli">
+                    </div>
+                    <h3>Lobster Ravioli</h3>
+                    <span class="dish-tag">Seafood</span>
+                    <p>Brittany blue lobster, saffron bisque, micro herbs, caviar pearls</p>
+                </div>
+
+                <div class="dish-card fade-up delay-400">
+                    <div class="dish-img-wrap">
+                        <img src="public/scallops.png" alt="Golden Scallops">
+                    </div>
+                    <h3>Golden Scallops</h3>
+                    <span class="dish-tag">Seafood</span>
+                    <p>Seared king scallops, cauliflower velouté, crispy chorizo, yuzu</p>
+                </div>
+            </div>
+
+            <div class="view-menu-link fade-up delay-100">
+                <a href="menu.html">View Full Menu →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- MENU PREVIEW -->
+    <!-- ============================================================ -->
+    <section class="section-padding" id="menu-preview">
+        <div class="container">
+            <div class="text-center fade-up delay-100" style="margin-bottom: 64px;">
+                <span class="section-tag">Taste the Selection</span>
+                <div class="gold-divider"></div>
+                <h2 class="section-title font-heading" style="margin-bottom: 0;">Tasting Menu</h2>
+            </div>
+
+            <div class="menu-preview-grid">
+                <!-- Starters -->
+                <div class="menu-preview-card fade-up delay-100">
+                    <h3>Starters</h3>
+                    <div class="menu-preview-item">
+                        <span>Oysters Pearl</span>
+                        <span>$45</span>
+                    </div>
+                    <div class="menu-preview-item">
+                        <span>Wagyu Carpaccio</span>
+                        <span>$52</span>
+                    </div>
+                    <div class="menu-preview-item">
+                        <span>Burrata &amp; Fig</span>
+                        <span>$35</span>
+                    </div>
+                </div>
+
+                <!-- Main Courses -->
+                <div class="menu-preview-card fade-up delay-200">
+                    <h3>Main Courses</h3>
+                    <div class="menu-preview-item">
+                        <span>Dover Sole</span>
+                        <span>$85</span>
+                    </div>
+                    <div class="menu-preview-item">
+                        <span>Iberico Pork Pluma</span>
+                        <span>$92</span>
+                    </div>
+                    <div class="menu-preview-item">
+                        <span>Risotto Acquerello</span>
+                        <span>$75</span>
+                    </div>
+                </div>
+
+                <!-- Desserts -->
+                <div class="menu-preview-card fade-up delay-300">
+                    <h3>Desserts</h3>
+                    <div class="menu-preview-item">
+                        <span>Valrhona Soufflé</span>
+                        <span>$28</span>
+                    </div>
+                    <div class="menu-preview-item">
+                        <span>Lemon Sphere</span>
+                        <span>$24</span>
+                    </div>
+                    <div class="menu-preview-item">
+                        <span>Seasonal Selection</span>
+                        <span>$22</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-menu-link fade-up delay-100">
+                <a href="menu.html">Full Menu with Wine Pairings →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- GALLERY PREVIEW -->
+    <!-- ============================================================ -->
+    <section style="background-color: #09090b; padding: 96px 0;" id="gallery-preview">
+        <div class="container">
+            <div class="text-center fade-up delay-100" style="margin-bottom: 48px;">
+                <span class="section-tag">Visual Journey</span>
+                <div class="gold-divider"></div>
+                <h2 class="section-title font-heading" style="margin-bottom: 0;">The Experience</h2>
+            </div>
+        </div>
+
+        <!-- Full-width grid -->
+        <div class="gallery-grid" style="aspect-ratio: unset; height: 500px;">
+            <div class="gallery-item fade-up delay-100">
+                <img src="public/gallery1.png" alt="Restaurant Interior">
+                <div class="gallery-overlay"><span>Interior</span></div>
+            </div>
+            <div class="gallery-item fade-up delay-200">
+                <img src="public/gallery2.png" alt="Cocktail Bar">
+                <div class="gallery-overlay"><span>Bar</span></div>
+            </div>
+            <div class="gallery-item fade-up delay-300">
+                <img src="public/salon2.png" alt="Dining Salon">
+                <div class="gallery-overlay"><span>Salon</span></div>
+            </div>
+            <div class="gallery-item fade-up delay-400">
+                <img src="public/gallery3.png" alt="Wine Tasting">
+                <div class="gallery-overlay"><span>Cellar</span></div>
+            </div>
+        </div>
+
+        <div class="gallery-cta container fade-up delay-100">
+            <a href="gallery.html">Explore Full Gallery →</a>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- RESERVATION + LOCATION -->
+    <!-- ============================================================ -->
+    <section class="section-padding" id="reservation">
+        <div class="container">
+            <div class="res-loc-wrap">
+                <!-- Reservation Box -->
+                <div class="reservation-box fade-up delay-100">
+                    <p style="color: var(--gold); text-transform: uppercase; letter-spacing: 0.2em; font-size: 12px; margin-bottom: 16px;">Book Your Table</p>
+                    <h2 class="font-heading">Reserve your table tonight.</h2>
+                    <p>Join us for an unforgettable Mediterranean fine dining experience. Available Tuesday to Sunday, from 7 PM to 11 PM.</p>
+
+                    <!-- Quick reservation form -->
+                    <form class="res-form" id="resForm" onsubmit="handleReservation(event)">
+                        <div class="res-form-row">
+                            <input type="text" placeholder="Your Name" required aria-label="Full name">
+                            <input type="tel" placeholder="Phone Number" aria-label="Phone number">
+                        </div>
+                        <div class="res-form-row">
+                            <input type="date" aria-label="Reservation date" required>
+                            <select aria-label="Number of guests">
+                                <option value="" disabled selected>Guests</option>
+                                <option>1 person</option>
+                                <option>2 persons</option>
+                                <option>3 persons</option>
+                                <option>4 persons</option>
+                                <option>5–6 persons</option>
+                                <option>7+ persons</option>
+                            </select>
+                        </div>
+
+                        <div class="reservation-btns" style="margin-top: 8px;">
+                            <button type="submit" class="btn-res-online">Request Reservation</button>
+                            <a href="https://wa.me/15551234567?text=Hello!%20I'd%20like%20to%20reserve%20a%20table%20at%20Luce%20Mare." target="_blank" class="btn-res-whatsapp">
+                                WhatsApp Reservation
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Location Info -->
+                <div class="location-info fade-up delay-200">
+                    <h3 class="font-heading">Find Us</h3>
+
+                    <div class="loc-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <div>
+                            <p style="color: var(--white-80);">Passeig de Gràcia 92</p>
+                            <p style="color: var(--white-50); font-size: 14px;">08008 Barcelona, Spain</p>
+                        </div>
+                    </div>
+
+                    <div class="loc-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <div>
+                            <p style="color: var(--white-80);">+34 93 123 45 67</p>
+                            <p style="color: var(--white-50); font-size: 14px;">reservations@lucemare.com</p>
+                        </div>
+                    </div>
+
+                    <div class="loc-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <div>
+                            <div class="hours-grid">
+                                <span class="hours-title">Tue – Thu</span>
+                                <span style="color: var(--white-60);">19:00 – 23:00</span>
+                                <span class="hours-title">Fri – Sat</span>
+                                <span style="color: var(--white-60);">19:00 – 00:00</span>
+                                <span class="hours-title">Sunday</span>
+                                <span style="color: var(--white-60);">13:00 – 17:00</span>
+                                <span class="hours-title">Monday</span>
+                                <span style="color: var(--white-50);">Closed</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Maps Embed -->
+                    <div class="map-embed">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.1285538940154!2d2.1615977!3d41.3930025!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a2c12ab4e6a7%3A0x9b14e5d67c9b4f4c!2sPasseig%20de%20Gr%C3%A0cia%2C%20Barcelona!5e0!3m2!1sen!2ses!4v1699000000000!5m2!1sen!2ses"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Luce Mare location on Google Maps">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- INSTAGRAM PREVIEW -->
+    <!-- ============================================================ -->
+    <section style="background-color: #09090b; padding: 96px 0 48px;" id="instagram">
+        <div class="container" style="text-align: center; margin-bottom: 48px;">
+            <span class="section-tag fade-up delay-100">Follow Us</span>
+            <div class="gold-divider fade-up delay-100"></div>
+            <h2 class="font-heading fade-up delay-200" style="font-size: 36px; color: var(--white-80);">@lucemare</h2>
+            <p class="fade-up delay-300" style="color: var(--white-50); margin-top: 12px; font-size: 14px;">Join our community for daily culinary inspiration</p>
+        </div>
+
+        <div class="container">
+            <div class="insta-grid">
+                <div class="insta-item fade-up delay-100">
+                    <img src="public/gallery4.png" alt="Luce Mare on Instagram">
+                    <div class="insta-overlay">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    </div>
+                </div>
+                <div class="insta-item fade-up delay-200">
+                    <img src="public/bar1.png" alt="Luce Mare on Instagram">
+                    <div class="insta-overlay">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    </div>
+                </div>
+                <div class="insta-item fade-up delay-300">
+                    <img src="public/bar2.png" alt="Luce Mare on Instagram">
+                    <div class="insta-overlay">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    </div>
+                </div>
+                <div class="insta-item fade-up delay-400">
+                    <img src="public/salon2.png" alt="Luce Mare on Instagram">
+                    <div class="insta-overlay">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 48px;" class="fade-up delay-100">
+                <a href="https://instagram.com" target="_blank" class="btn-outline">Follow @lucemare</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- FOOTER -->
+    <!-- ============================================================ -->
+    <footer>
+        <div style="flex: 1;">
+            <p>&copy; 2026 Luce Mare. All rights reserved.</p>
+            <p style="margin-top: 8px; font-size: 12px;">Passeig de Gràcia 92, Barcelona, Spain</p>
+        </div>
+        <div class="footer-logo">LUCE MARE</div>
+        <div class="footer-social" style="flex: 1; justify-content: flex-end;">
+            <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                Instagram
+            </a>
+            <a href="https://wa.me/15551234567" target="_blank" aria-label="WhatsApp">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                WhatsApp
+            </a>
+        </div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <!-- ============================================================ -->
+    <a href="https://wa.me/15551234567?text=Hello!%20I'd%20like%20to%20reserve%20a%20table%20at%20Luce%20Mare." target="_blank" class="fab-whatsapp" aria-label="Reserve via WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+    </a>
+
+    <!-- ============================================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================================ -->
+    <script src="script.js"></script>
+    <script>
+        // Show desktop reserve button on scroll
+        const navReserveBtn = document.getElementById('nav-reserve-btn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                navReserveBtn.style.display = 'block';
+            } else {
+                navReserveBtn.style.display = 'none';
+            }
+        });
+
+        // Reservation form handler
+        function handleReservation(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('.btn-res-online');
+            btn.textContent = 'Request Sent ✓';
+            btn.style.backgroundColor = '#1a6640';
+            btn.style.cursor = 'default';
+            setTimeout(() => {
+                btn.textContent = 'Request Reservation';
+                btn.style.backgroundColor = '';
+                btn.style.cursor = '';
+                e.target.reset();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
